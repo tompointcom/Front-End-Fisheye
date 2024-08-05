@@ -122,18 +122,46 @@ form input {
 
 .photographer-media {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    padding-left: 40px;
+
 }
 
 .media-item {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
+    padding: 10px 25px 10px 25px;
+    max-width: 350px;
+
 }
 
 .media-item img, .media-item video {
-    max-width: 100%;
-    height: auto;
+    object-fit: cover;
+    height: 300px;
+    width: 350px;
+    border-radius: 5px;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #901C1C;
+    font-size: 20px;
+
+
+}
+
+.likes-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.likes-count {
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+.fa-heart {
+    cursor: pointer;
 }

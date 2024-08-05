@@ -1,9 +1,14 @@
-// import MediaFactory from '../factories/media.js';
+import MediaFactory from '/scripts/Factory/media.js';
 
    // Récupérer l'ID du photographe à partir de l'URL
     const urlParams = new URLSearchParams(window.location.search);
     const photographerId = urlParams.get('id');
     console.log("ID récupéré de l'URL:", photographerId);
+
+// Fonction qui récupère le prénom du photographe
+function getFirstName(fullName) {
+    return fullName.split(' ')[0];
+}
     
 // Fonction pour charger les données des photographes
 async function loadPhotographerData() {
@@ -30,16 +35,16 @@ async function initPhotographerPage() {
         console.error("Aucun ID de photographe dans l'URL");
         return;
     }
-    
+
     const data = await loadPhotographerData();
     console.log("Données chargées:", data);
-    
+
     const photographer = findPhotographer(data, photographerId);
 
     if (photographer) {
         console.log("Photographe trouvé:", photographer);
         displayPhotographerInfo(photographer);
-        
+
         // Afficher les médias du photographe
         const photographerMedia = getPhotographerMedia(data, photographerId);
         displayPhotographerMedia(photographerMedia, photographer.name);
@@ -87,45 +92,48 @@ async function initPhotographerPage() {
         return data.media.filter(item => item.photographerId === parseInt(photographerId));
     }
 
-    
-    function createMediaElement(mediaItem, photographerName) {
+function displayPhotographerMedia(media, photographerFullName) {
+    const mediaSection = document.createElement('section');
+    mediaSection.classList.add('photographer-media');
+
+    const photographerFirstName = getFirstName(photographerFullName);
+
+    media.forEach(item => {
         const mediaContainer = document.createElement('div');
         mediaContainer.classList.add('media-item');
-    
-        if (mediaItem.image) {
-            const img = document.createElement('img');
-            img.src = `assets/photographers/${photographerName}/${mediaItem.image}`;
-            img.alt = mediaItem.title;
-            mediaContainer.appendChild(img);
-        } else if (mediaItem.video) {
-            const video = document.createElement('video');
-            video.src = `assets/photographers/${photographerName}/${mediaItem.video}`;
-            video.controls = true;
-            mediaContainer.appendChild(video);
-        }
-    
-        const title = document.createElement('h2');
-        title.textContent = mediaItem.title;
-        mediaContainer.appendChild(title);
-    
-        const likes = document.createElement('span');
-        likes.textContent = `${mediaItem.likes} ♥`;
-        mediaContainer.appendChild(likes);
-    
-        return mediaContainer;
-    }
 
-    function displayPhotographerMedia(media, photographerName) {
-        const mediaSection = document.createElement('section');
-        mediaSection.classList.add('photographer-media');
-    
-        media.forEach(item => {
-            const mediaElement = createMediaElement(item, photographerName);
-            mediaSection.appendChild(mediaElement);
-        });
-    
-        // Ajoutez cette section à votre page, par exemple après le header
-        const main = document.querySelector('main');
-        main.appendChild(mediaSection);
-    }
+        // Utilisation de MediaFactory ici
+        const mediaElement = MediaFactory.createMediaElement(item, photographerFirstName);
+        mediaContainer.appendChild(mediaElement);
+
+        const content = document.createElement('div');
+        content.classList.add('content');
+        mediaContainer.appendChild(content);
+
+        const title = document.createElement('h2');
+        title.textContent = item.title;
+        content.appendChild(title);
+
+        const likesContainer = document.createElement('div');
+        likesContainer.classList.add('likes-container');
+
+        const likesCount = document.createElement('span');
+        likesCount.textContent = item.likes;
+        likesCount.classList.add('likes-count');
+
+        const heartIcon = document.createElement('i');
+        heartIcon.classList.add('fas', 'fa-heart');
+
+        content.appendChild(likesContainer);
+        likesContainer.appendChild(likesCount);
+        likesContainer.appendChild(heartIcon);
+
+        mediaSection.appendChild(mediaContainer);
+    });
+
+    const main = document.querySelector('main');
+    main.appendChild(mediaSection);
+}
+
+// Contact modal
 
