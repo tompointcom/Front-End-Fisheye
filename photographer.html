@@ -27,14 +27,53 @@
           <img src="assets/icons/close.svg" onclick="closeModal()" />
 
         </header>
-				<form>
-					<div>
-						<label>Prénom</label>
-						<input />
+				<form id="form" name="reserve" action="photographer.html" method="get">
+					<div class="formData">
+                        <label for="first">Prénom</label><br />
+                        <input
+                                class="text-control"
+                                type="text"
+                                id="first"
+                                name="first"
+                        />
+                    </div>
+                    <div class="formData">
+                        <label for="last">Nom</label><br />
+                        <input
+                                class="text-control"
+                                type="text"
+                                id="last"
+                                name="last"
+                        />
+                    </div>
+                    <div class="formData">
+                        <label for="email">E-mail</label><br />
+                        <input
+                                class="text-control"
+                                id="email"
+                                name="email"
+                        />
+                    </div>
+                    <div class="formData">
+                        <label for="message">Votre Message</label>
+                        <textarea
+                                class="text-control"
+                                type="text"
+                                id="message"
+                                name="message"
+                        ></textarea>
+                    </div>
+                    <button class="contact_button">Envoyer</button>
 					</div>
-          <button class="contact_button">Envoyer</button>
 				</form>
 			</div>
+            <div class="modal-confirmation">
+            <p class="modal-confirmation-text">
+            Votre message <br />
+            a bien été envoyé !
+            </p>
+            <button class="btn-submit btn-close">Fermer</button>
+            </div>
 		</div>
     <script type="module" src="/scripts/pages/photographer.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>

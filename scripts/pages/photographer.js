@@ -83,7 +83,7 @@ async function initPhotographerPage() {
         headerText.appendChild(taglineElement);
         header.appendChild(portraitElement);
         
-        // Mise à jour du bouton de contact
+        // Mise à jour du button de contact
         const contactButton = document.querySelector('.contact_button');
         contactButton.textContent = `Contactez-moi`;
     }
@@ -134,6 +134,4 @@ function displayPhotographerMedia(media, photographerFullName) {
     const main = document.querySelector('main');
     main.appendChild(mediaSection);
 }
-
-// Contact modal
 
