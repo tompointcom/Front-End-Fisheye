@@ -1,35 +1,38 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <link href="css/photographer.css" rel="stylesheet" type="text/css" />
+<html lang="fr">
+<head>
+    <link href="css/photographer.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="css/lightbox.css">
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Fisheye - photographe </title>
-  </head>
-  <body>
-    <header>
-      <a href="index.html"  aria-label="Fisheye Home page" tabindex="0"> 
+</head>
+<body>
+<header>
+    <a href="index.html" aria-label="Fisheye Home page" tabindex="0">
         <img src="assets/images/logo.png" class="logo" alt="Fisheye Home page"/>
-      </a>
-    </header>
+    </a>
+</header>
 
-    <main id="main">
-      <div class="photograph-header">
+<main id="main">
+    <div class="photograph-header">
         <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
-      </div>
-    </main>
-    <div id="contact_modal">
-			<div class="modal">
-				<header>
-          <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+    </div>
+</main>
+<div id="contact_modal">
+    <div class="bground">
+        <div class="modal">
+            <header>
+                <h2>Contactez-moi</h2>
+                <img src="assets/icons/close.svg" onclick="closeModal()"/>
 
-        </header>
-				<form id="form" name="reserve" action="photographer.html" method="get">
-					<div class="formData">
-                        <label for="first">Prénom</label><br />
+            </header>
+            <form id="form" name="reserve" action="photographer.html" method="get">
+                <div class="modal-body">
+                    <div class="formData">
+                        <label for="first">Prénom</label><br/>
                         <input
                                 class="text-control"
                                 type="text"
@@ -38,7 +41,7 @@
                         />
                     </div>
                     <div class="formData">
-                        <label for="last">Nom</label><br />
+                        <label for="last">Nom</label><br/>
                         <input
                                 class="text-control"
                                 type="text"
@@ -47,7 +50,7 @@
                         />
                     </div>
                     <div class="formData">
-                        <label for="email">E-mail</label><br />
+                        <label for="email">E-mail</label><br/>
                         <input
                                 class="text-control"
                                 id="email"
@@ -64,19 +67,43 @@
                         ></textarea>
                     </div>
                     <button class="contact_button">Envoyer</button>
-					</div>
-				</form>
-			</div>
-            <div class="modal-confirmation">
-            <p class="modal-confirmation-text">
-            Votre message <br />
-            a bien été envoyé !
-            </p>
-            <button class="btn-submit btn-close">Fermer</button>
-            </div>
-		</div>
-    <script type="module" src="/scripts/pages/photographer.js"></script>
-    <script src="/scripts/utils/contactForm.js"></script>
-    <script type="module" src="/scripts/Factory/media.js"></script>
-  </body>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-confirmation" style="display: none;">
+    <h2>Votre message a bien été envoyé !</h2>
+    <button class="btn-close">Fermer</button>
+</div>
+
+<div id="lightbox" class="lightbox" style="display: none;">
+    <button class="lightbox-close">
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M42 4.23L37.77 0L21 16.77L4.23 0L0 4.23L16.77 21L0 37.77L4.23 42L21 25.23L37.77 42L42 37.77L25.23 21L42 4.23Z" fill="#911C1C"/>
+        </svg>
+    </button>
+    <button class="lightbox-prev">
+        <svg width="30" height="48" viewBox="0 0 30 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M29.6399 42.36L11.3199 24L29.6399 5.64L23.9999 -2.46532e-07L-0.000107861 24L23.9999 48L29.6399 42.36Z" fill="#911C1C"/>
+        </svg>
+    </button>
+    <button class="lightbox-next">
+        <svg width="30" height="48" viewBox="0 0 30 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0.360108 5.64L18.6801 24L0.360107 42.36L6.00011 48L30.0001 24L6.00011 3.88195e-06L0.360108 5.64Z" fill="#911C1C"/>
+        </svg>
+    </button>
+    <div id="lightbox-media"></div>
+    <p class="lightbox-caption"></p>
+</div>
+
+</body>
+<script type="module" src="scripts/pages/photographer.js"></script>
+<script src="/scripts/utils/contactForm.js"></script>
+<script type="module" src="/scripts/Factory/media.js"></script>
+<script type="module" src="scripts/utils/lightbox.js"></script>
+</body>
 </html>

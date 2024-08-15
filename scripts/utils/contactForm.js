@@ -1,10 +1,15 @@
+// DOM Elements
+const modal = document.getElementById("contact_modal");
+const modalConfirmation = document.getElementById("modal-confirmation");
+const modalBody = document.querySelector(".modal-body");
+
+
+
 function displayModal() {
-    const modal = document.getElementById("contact_modal");
 	modal.style.display = "block";
 }
 
 function closeModal() {
-    const modal = document.getElementById("contact_modal");
     modal.style.display = "none";
 }
 
@@ -82,14 +87,23 @@ document.addEventListener("DOMContentLoaded", function() {
         return true;
     }
     // display confirmation modal
-    function showModalConfirmation () {
-        const modal = document.getElementById("contact_modal");
-        const modalConfirmation = document.getElementById("modal-confirmation");
-        modal.style.display = "none";
-        modalConfirmation.style.display = "flex";
+    function showModalConfirmation() {
+        if (modalBody) {
+            modalBody.style.display = "none";
+            modalConfirmation.style.display = "flex";
+        } else {
+            console.error("L'élément modalBody n'a pas été trouvé.");
+        }
     }
 
+    const btnCloseConfirmation = document.querySelector(".modal-confirmation .btn-close");
+    btnCloseConfirmation.addEventListener("click", closeModal);
 
+    function closeModal() {
+        modalbg.style.display = "none";
+        modalBody.style.display = "flex";
+        modalConfirmation.style.display = "none";
+    }
 
     if (form) {
         form.addEventListener("submit", function (event) {
@@ -109,3 +123,4 @@ document.addEventListener("DOMContentLoaded", function() {
         console.error("Le formulaire n'a pas été trouvé dans le document.");
     }
 });
+

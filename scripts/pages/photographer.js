@@ -1,4 +1,6 @@
 import MediaFactory from '/scripts/Factory/media.js';
+import Lightbox from '../utils/lightbox.js';
+
 
    // Récupérer l'ID du photographe à partir de l'URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -98,7 +100,9 @@ function displayPhotographerMedia(media, photographerFullName) {
 
     const photographerFirstName = getFirstName(photographerFullName);
 
-    media.forEach(item => {
+    const lightbox = new Lightbox(media, photographerFirstName);
+
+    media.forEach((item, index) => {
         const mediaContainer = document.createElement('div');
         mediaContainer.classList.add('media-item');
 
@@ -124,11 +128,24 @@ function displayPhotographerMedia(media, photographerFullName) {
         const heartIcon = document.createElement('i');
         heartIcon.classList.add('fas', 'fa-heart');
 
+        mediaElement.addEventListener('click', () => {
+            lightbox.openLightBox(index);
+        });
+
+        item.photographerName = photographerFirstName;
+
+        // mediaData.push({
+        //     type: item.image ? 'image' : 'video',
+        //     url: `assets/photographers/${photographerFirstName}/${item.image || item.video}`,
+        //     title: item.title
+        // });
+
         content.appendChild(likesContainer);
         likesContainer.appendChild(likesCount);
         likesContainer.appendChild(heartIcon);
 
         mediaSection.appendChild(mediaContainer);
+
     });
 
     const main = document.querySelector('main');
