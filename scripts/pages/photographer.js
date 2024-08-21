@@ -1,6 +1,8 @@
 import MediaFactory from '/scripts/Factory/media.js';
 import Lightbox from '../utils/lightbox.js';
 
+// DOM
+const body = document.querySelector('body');
 
    // Récupérer l'ID du photographe à partir de l'URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -77,13 +79,35 @@ async function initPhotographerPage() {
         const portraitElement = document.createElement('img');
         portraitElement.src = `assets/photographers/${photographer.portrait}`;
         portraitElement.alt = photographer.name;
-        
 
+        const totalLikesAndPriceContainer = document.createElement('div');
+        totalLikesAndPriceContainer.classList.add('totalLikesPrice');
+
+        const totalLikes = document.createElement('span');
+        totalLikes.classList.add('totalLikes');
+
+        const pricePerDay = document.createElement('span');
+        pricePerDay.classList.add('price');
+        pricePerDay.textContent = `${photographer.price}€ / jour`;
+
+        const heartIcon = document.createElement('i');
+        heartIcon.classList.add('fas', 'fa-heart');
+
+        const totalLikesContainer = document.createElement('div');
+        totalLikesContainer.classList.add('totalLikesContainer');
+
+
+        totalLikesAndPriceContainer.appendChild(totalLikesContainer);
+        totalLikesContainer.appendChild(totalLikes);
+        totalLikesContainer.appendChild(heartIcon);
+        totalLikesAndPriceContainer.appendChild(pricePerDay);
+        body.appendChild(totalLikesAndPriceContainer);
         header.prepend(headerText);
         headerText.appendChild(nameElement);
         headerText.appendChild(locationElement);
         headerText.appendChild(taglineElement);
         header.appendChild(portraitElement);
+
         
         // Mise à jour du button de contact
         const contactButton = document.querySelector('.contact_button');
@@ -102,11 +126,12 @@ function displayPhotographerMedia(media, photographerFullName) {
 
     const lightbox = new Lightbox(media, photographerFirstName);
 
+    updateTotalLikesDisplay(media);
+
     media.forEach((item, index) => {
         const mediaContainer = document.createElement('div');
         mediaContainer.classList.add('media-item');
 
-        // Utilisation de MediaFactory ici
         const mediaElement = MediaFactory.createMediaElement(item, photographerFirstName);
         mediaContainer.appendChild(mediaElement);
 
@@ -127,28 +152,63 @@ function displayPhotographerMedia(media, photographerFullName) {
 
         const heartIcon = document.createElement('i');
         heartIcon.classList.add('fas', 'fa-heart');
+        heartIcon.dataset.liked = false;  // Etat initial
 
-        mediaElement.addEventListener('click', () => {
-            lightbox.openLightBox(index);
+
+
+        heartIcon.addEventListener('click', () => {
+            let currentLikes = parseInt(likesCount.textContent);
+            if (heartIcon.dataset.liked === 'false') {
+                currentLikes += 1;
+                heartIcon.classList.add('liked');
+                heartIcon.dataset.liked = 'true';
+            } else {
+                currentLikes -= 1;
+                heartIcon.classList.remove('liked');
+                heartIcon.dataset.liked = 'false';
+            }
+            likesCount.textContent = currentLikes;
+            item.likes = currentLikes;
+            updateTotalLikesDisplay(media);
+
         });
 
-        item.photographerName = photographerFirstName;
-
-        // mediaData.push({
-        //     type: item.image ? 'image' : 'video',
-        //     url: `assets/photographers/${photographerFirstName}/${item.image || item.video}`,
-        //     title: item.title
-        // });
 
         content.appendChild(likesContainer);
         likesContainer.appendChild(likesCount);
         likesContainer.appendChild(heartIcon);
 
         mediaSection.appendChild(mediaContainer);
-
     });
 
     const main = document.querySelector('main');
     main.appendChild(mediaSection);
 }
+
+
+
+// Fonction pour mettre à jour les likes dans le stockage local ou la base de données
+function updateLikesInStorage(mediaId, newLikes) {
+    const likesTotal = document.createElement('p');
+    likesTotal.textContent = item.likes;
+
+    console.log(`Mise à jour des likes pour le média ID: ${mediaId}, nouveaux likes: ${newLikes}`);
+}
+
+// Fonction pour calculer le total des likes
+function calculateTotalLikes(media) {
+    return media.reduce((total, item) => total + item.likes, 0);
+}
+
+// Fonction pour mettre à jour l'affichage du total des likes
+function updateTotalLikesDisplay(media) {
+    const totalLikesElement = document.querySelector('.totalLikes');
+    const totalLikes = calculateTotalLikes(media);
+    totalLikesElement.textContent = `${totalLikes}`;
+}
+
+
+
+
+
 

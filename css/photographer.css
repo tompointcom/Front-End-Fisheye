@@ -157,10 +157,6 @@ form textarea {
     cursor: pointer;
 }
 
-/* confirmation page */
-/*.modal-confirmation {*/
-/*    display: none;*/
-/*}*/
 .modal-confirmation-text {
     font-size: 36px;
     font-weight: 400;
@@ -240,4 +236,28 @@ form textarea {
 
 .fa-heart {
     cursor: pointer;
+}
+
+.totalLikesPrice {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+    position: fixed;
+    bottom: 0;
+    right: 1rem;
+    background-color: #DB8876;
+    padding: 1rem 1.5rem;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 24px;
+    width: 350px;
+}
+
+.totalLikes, .price {
+    margin-right: 1rem;
+}
+
+.totalLikesContainer {
+
 }
