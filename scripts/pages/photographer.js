@@ -31,7 +31,7 @@ async function loadPhotographerData() {
     try {
         const response = await fetch('/data/photographers.json');
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            new Error(`HTTP error! status: ${response.status}`);
         }
         return await response.json();
     } catch (error) {
