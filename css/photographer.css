@@ -57,6 +57,7 @@ header {
     justify-content: space-between;
     padding: 35px;
     margin: auto;
+    height: 100%;
 
 }
 
@@ -258,6 +259,81 @@ form textarea {
     margin-right: 1rem;
 }
 
-.totalLikesContainer {
+.sorting-section {
+    display: flex;
+    gap : 1rem;
+    align-items: center;
+    margin: 1rem 0;
+    padding-left: 4rem;
+}
 
+.sort-by {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Dropdown Button Styles */
+.dropdown-btn {
+    background-color: #901C1C; /* Red background */
+    color: white; /* White text */
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    width: 8rem;
+}
+
+/* Icon Rotation */
+.dropdown-icon {
+    transition: transform 0.3s ease;
+}
+
+.dropdown-icon.open {
+    transform: rotate(180deg);
+}
+
+/* Listbox Styles */
+.dropdown {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start; /* Align content to the left */
+    justify-content: flex-start;
+    background-color: #901C1C; /* Red background */
+    color: white; /* White text */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 5px;
+    position: absolute;
+    width: 8rem;
+    z-index: 1000;
+}
+
+.dropdown[hidden] {
+    display: none;
+}
+
+.dropdown li {
+    padding: 10px;
+    border-bottom: 1px solid white; /* White border between options */
+    cursor: pointer;
+    width: 75%; /* Reduce the width of the border */
+    margin: 5px; /* Align items to the left */
+
+}
+
+.dropdown li:last-child {
+    border-bottom: none; /* Remove border from the last option */
+}
+
+.dropdown li a {
+    color: white; /* White text */
+    text-decoration: none;
 }

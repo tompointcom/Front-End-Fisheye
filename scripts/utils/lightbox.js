@@ -1,65 +1,78 @@
 export default class Lightbox {
     constructor(mediaItems, photographerName) {
-        this.mediaItems = mediaItems;
-        this.photographerName = photographerName;
-        this.currentIndex = 0;
-        this.lightbox = document.getElementById('lightbox');
-        this.mediaContainer = document.getElementById('lightbox-media');
-        this.caption = document.querySelector('.lightbox-caption');
-        this.closeBtn = document.querySelector('.lightbox-close');
-        this.prevBtn = document.querySelector('.lightbox-prev');
-        this.nextBtn = document.querySelector('.lightbox-next');
+        // Get references to DOM elements
+        const lightbox = document.getElementById('lightbox');
+        const mediaContainer = document.getElementById('lightbox-media');
+        const caption = document.querySelector('.lightbox-caption');
+        const closeBtn = document.querySelector('.lightbox-close');
+        const prevBtn = document.querySelector('.lightbox-prev');
+        const nextBtn = document.querySelector('.lightbox-next');
+        let currentIndex = 0; // Initialize the current index
 
-        this.bindEvents();
-    }
-
-    bindEvents() {
-        this.closeBtn.addEventListener('click', () => this.close());
-        this.prevBtn.addEventListener('click', () => this.showPrev());
-        this.nextBtn.addEventListener('click', () => this.showNext());
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') this.close();
-            if (e.key === 'ArrowLeft') this.showPrev();
-            if (e.key === 'ArrowRight') this.showNext();
-        });
-    }
-
-    openLightBox(index) {
-        this.currentIndex = index;
-        this.lightbox.style.display = 'block';
-        this.showMedia();
-    }
-
-    close() {
-        this.lightbox.style.display = 'none';
-    }
-
-    showMedia() {
-        const item = this.mediaItems[this.currentIndex];
-        this.mediaContainer.innerHTML = '';
-
-        if (item.image) {
-            const img = document.createElement('img');
-            img.src = `assets/photographers/${this.photographerName}/${item.image}`;
-            img.alt = item.title;
-            this.mediaContainer.appendChild(img);
-        } else if (item.video) {
-            const video = document.createElement('video');
-            video.src = `assets/photographers/${this.photographerName}/${item.video}`;
-            video.controls = true;
-            this.mediaContainer.appendChild(video);
+        // Bind event listeners to the lightbox controls
+        function bindEvents() {
+            closeBtn.addEventListener('click', close);
+            prevBtn.addEventListener('click', showPrev);
+            nextBtn.addEventListener('click', showNext);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') close();
+                if (e.key === 'ArrowLeft') showPrev();
+                if (e.key === 'ArrowRight') showNext();
+            });
         }
 
-        this.caption.textContent = item.title;
-    }
+        // Open the lightbox and display the media at the given index
+        function openLightBox(index) {
+            currentIndex = index;
+            lightbox.style.display = 'block';
+            showMedia();
+        }
 
-    showNext() {
-        this.currentIndex = (this.currentIndex + 1) % this.mediaItems.length;
-        this.showMedia();
-    }
+        // Close the lightbox
+        function close() {
+            lightbox.style.display = 'none';
+        }
 
-    showPrev() {
-        this.currentIndex = (this.currentIndex - 1 + this.mediaItems.length) % this.mediaItems.length;
-        this.showMedia();
+        // Display the media item at the current index
+        function showMedia() {
+            const item = mediaItems[currentIndex];
+            mediaContainer.innerHTML = ''; // Clear the media container
+
+            // Check if the item is an image
+            if (item.image) {
+                const img = document.createElement('img');
+                img.src = `assets/photographers/${photographerName}/${item.image}`;
+                img.alt = item.title;
+                mediaContainer.appendChild(img);
+            }
+            // Check if the item is a video
+            else if (item.video) {
+                const video = document.createElement('video');
+                video.src = `assets/photographers/${photographerName}/${item.video}`;
+                video.controls = true;
+                mediaContainer.appendChild(video);
+            }
+
+            // Set the caption text
+            caption.textContent = item.title;
+        }
+
+        // Show the next media item
+        function showNext() {
+            currentIndex = (currentIndex + 1) % mediaItems.length;
+            showMedia();
+        }
+
+        // Show the previous media item
+        function showPrev() {
+            currentIndex = (currentIndex - 1 + mediaItems.length) % mediaItems.length;
+            showMedia();
+        }
+
+        // Bind the events when the lightbox is initialized
+        bindEvents();
+
+        // Expose the openLightBox method to be used outside the class
+        this.openLightBox = openLightBox;
     }
 }
