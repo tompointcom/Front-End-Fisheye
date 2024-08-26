@@ -70,12 +70,6 @@ header {
     cursor: pointer;
 }
 
-.modal header h2 {
-    font-size: 64px;
-    font-weight: normal;
-    text-align: center;
-}
-
 form {
     display: flex;
     width: 100%;
@@ -136,34 +130,20 @@ form textarea {
     border: 2px solid #e54858;
 }
 
-.modal-confirmation {
-    display: none;
+
+.modal-header-text {
+    display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    justify-content: flex-start;
+    align-content: flex-start;
+    font-size: 40px;
+    font-weight: normal;
+
+}
+
+.modal-header-text p {
+    margin-top: -5rem;
     padding: 20px;
-}
-
-.modal-confirmation h2 {
-    margin-bottom: 20px;
-}
-
-.modal-confirmation .btn-close {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.modal-confirmation-text {
-    font-size: 36px;
-    font-weight: 400;
-    line-height: 51.34px;
-    text-align: center;
-
 }
 
 .photograph-header {

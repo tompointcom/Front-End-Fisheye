@@ -25,57 +25,40 @@
         <div class="sorting-container"></div>
     </div>
 </main>
-<div id="contact_modal">
+<div id="contact_modal" role="dialog" aria-hidden="true">
     <div class="bground">
         <div class="modal">
             <header>
-                <h2>Contactez-moi</h2>
-                <img src="assets/icons/close.svg" onclick="closeModal()"/>
-
+                <div class="modal-header-text">
+                    <h2 id="modal-title">Contactez-moi</h2>
+                    <p id="photographer_name"></p>
+                </div>
+                <img src="assets/icons/close.svg" onclick="closeModal()" alt="Close modal"/>
             </header>
             <form id="form" name="reserve" action="photographer.html" method="get">
                 <div class="modal-body">
                     <div class="formData">
                         <label for="first">Prénom</label><br/>
-                        <input
-                                class="text-control"
-                                type="text"
-                                id="first"
-                                name="first"
-                        />
+                        <input class="text-control" type="text" id="first" name="first" aria-label="Prénom"/>
                     </div>
                     <div class="formData">
                         <label for="last">Nom</label><br/>
-                        <input
-                                class="text-control"
-                                type="text"
-                                id="last"
-                                name="last"
-                        />
+                        <input class="text-control" type="text" id="last" name="last" aria-label="Nom"/>
                     </div>
                     <div class="formData">
                         <label for="email">E-mail</label><br/>
-                        <input
-                                class="text-control"
-                                id="email"
-                                name="email"
-                        />
+                        <input class="text-control" id="email" name="email" aria-label="E-mail"/>
                     </div>
                     <div class="formData">
                         <label for="message">Votre Message</label>
-                        <textarea
-                                class="text-control"
-                                type="text"
-                                id="message"
-                                name="message"
-                        ></textarea>
+                        <textarea class="text-control" type="text" id="message" name="message" aria-label="Votre Message"></textarea>
                     </div>
-                    <button class="contact_button">Envoyer</button>
+                    <button class="contact_button" aria-label="Envoyer le message">Envoyer</button>
                 </div>
             </form>
-
         </div>
     </div>
+</div>
 
 </div>
 
@@ -99,9 +82,9 @@
     <p class="lightbox-caption"></p>
 </div>
 
-</body>
+
 <script type="module" src="scripts/pages/photographer.js"></script>
-<script src="/scripts/utils/contactForm.js"></script>
+<script type="module" src="/scripts/utils/contactForm.js"></script>
 <script type="module" src="/scripts/Factory/media.js"></script>
 <script type="module" src="scripts/utils/lightbox.js"></script>
 </body>

@@ -3,13 +3,25 @@ const modal = document.getElementById("contact_modal");
 const form = document.getElementById("form");
 
 // Utility Functions
-function displayModal() {
+function displayModal(photographerName) {
+    const photographerNameElement = document.getElementById("photographer_name");
+    photographerNameElement.textContent = photographerName;
     modal.style.display = "block";
+    modal.setAttribute('aria-hidden', 'false');
+    modal.setAttribute('aria-labelledby', 'modal-title');
+    document.addEventListener('keydown', handleEscapeKey);
 }
 
 function closeModal() {
     modal.style.display = "none";
-    form.style.display = "block"; // Show the form when closing the modal
+    modal.setAttribute('aria-hidden', 'true');
+    form.style.display = "block";
+}
+
+function handleEscapeKey(event) {
+    if (event.key === "Escape") {
+        closeModal();
+    }
 }
 
 function setError(element, message) {
@@ -99,6 +111,9 @@ document.addEventListener("DOMContentLoaded", function() {
         console.error("Le formulaire n'a pas été trouvé dans le document.");
     }
 });
+
+// Export functions for use in other modules
+export { displayModal, closeModal };
 
 // Attach functions to the global scope
 window.displayModal = displayModal;

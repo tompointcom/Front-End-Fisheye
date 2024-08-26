@@ -1,9 +1,15 @@
+// scripts/pages/photographer.js
+
 // Imports
 import MediaFactory from '/scripts/Factory/media.js';
 import Lightbox from '/scripts/utils/lightbox.js';
 import { sortByPopularity, sortByDate, sortByTitle } from '/scripts/utils/sorting.js';
+import { displayModal } from '/scripts/utils/contactForm.js';
 
-// Rest of the code remains unchanged
+document.querySelector('.contact_button').addEventListener('click', () => {
+    const photographerName = document.querySelector('.photograph-header h1').textContent;
+    displayModal(photographerName);
+});
 
 // DOM Elements
 const body = document.querySelector('body');
@@ -31,11 +37,13 @@ async function loadPhotographerData() {
     try {
         const response = await fetch('/data/photographers.json');
         if (!response.ok) {
-            new Error(`HTTP error! status: ${response.status}`);
+            console.error(`HTTP error! status: ${response.status}`);
+            return null;
         }
         return await response.json();
     } catch (error) {
         console.error("Erreur lors du chargement des données:", error);
+        return null;
     }
 }
 
@@ -147,13 +155,11 @@ function displayPhotographerMedia(media, photographerFullName) {
             event.stopPropagation();
             let currentLikes = parseInt(likesCount.textContent);
             if (heartIcon.dataset.liked === 'false') {
-                currentLikes += 1;
-                heartIcon.classList.add('liked');
                 heartIcon.dataset.liked = 'true';
+                currentLikes += 1;
             } else {
-                currentLikes -= 1;
-                heartIcon.classList.remove('liked');
                 heartIcon.dataset.liked = 'false';
+                currentLikes -= 1;
             }
             likesCount.textContent = currentLikes;
             item.likes = currentLikes;
@@ -180,8 +186,7 @@ function displayPhotographerMedia(media, photographerFullName) {
         mediaContainer.addEventListener('keydown', (event) => {
             if (event.key === 'Enter' || event.key === ' ') {
                 if (document.activeElement !== heartIcon) {
-                    event.preventDefault();
-                    lightbox.openLightBox(index);
+                    mediaElement.click();
                 }
             }
         });

@@ -12,7 +12,14 @@ function handleKeyDown(event) {
         if (previousArticle) {
             previousArticle.focus();
         }
+    } else if (event.key === 'Escape') {
+        closeModal();
     }
+}
+
+function closeModal() {
+    const modal = document.getElementById('contact_modal');
+    modal.style.display = 'none';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -20,5 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
     articles.forEach(article => {
         article.setAttribute('tabindex', 0);
         article.addEventListener('keydown', handleKeyDown);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            closeModal();
+        }
     });
 });
