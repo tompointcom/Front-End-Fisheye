@@ -1,4 +1,5 @@
-function handleKeyDown(event) {
+/** Handles keydown events for navigation and modal interactions. **/
+export function handleKeyDown(event) {
     const currentArticle = event.target;
     if (event.key === 'Enter') {
         currentArticle.click();
@@ -17,9 +18,11 @@ function handleKeyDown(event) {
     }
 }
 
-function closeModal() {
+export function closeModal() {
     const modal = document.getElementById('contact_modal');
-    modal.style.display = 'none';
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

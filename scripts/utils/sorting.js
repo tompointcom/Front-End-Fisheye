@@ -1,18 +1,28 @@
-
-// Function to sort media by popularity (number of likes)
-function sortByPopularity(media) {
+/** Function to sort media by popularity (number of likes) **/
+export function sortByPopularity(media) {
     return media.sort((a, b) => b.likes - a.likes);
 }
 
-// Function to sort media by date
-function sortByDate(media) {
-    return media.sort((a, b) => new Date(b.date) - new Date(a.date));
+/** Function to sort media by date **/
+export function sortByDate(media) {
+    return media.sort((a, b) => new Date(b["date"]) - new Date(a["date"]));
 }
 
-// Function to sort media by title (alphabetical order)
-function sortByTitle(media) {
+/** Function to sort media by title (alphabetical order) **/
+export function sortByTitle(media) {
     return media.sort((a, b) => a.title.localeCompare(b.title));
 }
 
-// Export sorting functions
-export { sortByPopularity, sortByDate, sortByTitle };
+/** Filter function **/
+export function filterBy(criteria, media) {
+    switch (criteria) {
+        case 'popularity':
+            return sortByPopularity(media);
+        case 'date':
+            return sortByDate(media);
+        case 'title':
+            return sortByTitle(media);
+        default:
+            return media;
+    }
+}

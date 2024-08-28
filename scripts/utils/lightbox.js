@@ -39,9 +39,9 @@ export default class Lightbox {
             mediaContainer.innerHTML = ''; // Clear the media container
 
             // Check if the item is an image
-            if (item.image) {
+            if (item["image"]) {
                 const img = document.createElement('img');
-                img.src = `assets/photographers/${photographerName}/${item.image}`;
+                img.src = `assets/photographers/${photographerName}/${item["image"]}`;
                 img.alt = item.title;
                 mediaContainer.appendChild(img);
             }

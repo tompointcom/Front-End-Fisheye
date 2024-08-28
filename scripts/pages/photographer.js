@@ -1,11 +1,9 @@
-// scripts/pages/photographer.js
-
-// Imports
 import MediaFactory from '/scripts/Factory/media.js';
 import Lightbox from '/scripts/utils/lightbox.js';
-import { sortByPopularity, sortByDate, sortByTitle } from '/scripts/utils/sorting.js';
+import { filterBy } from '/scripts/utils/sorting.js';
 import { displayModal } from '/scripts/utils/contactForm.js';
 
+/** Event listener to display the contact modal. **/
 document.querySelector('.contact_button').addEventListener('click', () => {
     const photographerName = document.querySelector('.photograph-header h1').textContent;
     displayModal(photographerName);
@@ -17,22 +15,24 @@ const main = document.querySelector('main');
 const urlParams = new URLSearchParams(window.location.search);
 const photographerId = urlParams.get('id');
 
-// Utility Functions
+/** Extracts the first name from a full name. **/
 function getFirstName(fullName) {
     return fullName.split(' ')[0];
 }
 
+/** Calculates the total number of likes from the media array. **/
 function calculateTotalLikes(media) {
     return media.reduce((total, item) => total + item.likes, 0);
 }
 
+/** Updates the total likes display element with the current total likes. **/
 function updateTotalLikesDisplay(media) {
     const totalLikesElement = document.querySelector('.totalLikes');
     const totalLikes = calculateTotalLikes(media);
     totalLikesElement.textContent = `${totalLikes}`;
 }
 
-// Data Fetching Functions
+/** Loads photographer data from the JSON file. **/
 async function loadPhotographerData() {
     try {
         const response = await fetch('/data/photographers.json');
@@ -47,15 +47,17 @@ async function loadPhotographerData() {
     }
 }
 
+/** Finds a photographer by ID from the data. **/
 function findPhotographer(data, id) {
-    return data.photographers.find(p => p.id === parseInt(id));
+    return data["photographers"].find(p => p.id === parseInt(id));
 }
 
+/** Gets the media for a specific photographer. **/
 function getPhotographerMedia(data, photographerId) {
-    return data.media.filter(item => item.photographerId === parseInt(photographerId));
+    return data.media.filter(item => item["photographerId"] === parseInt(photographerId));
 }
 
-// Display Functions
+/** Displays the photographer's information on the page. **/
 function displayPhotographerInfo(photographer) {
     const header = document.querySelector('.photograph-header');
     const headerText = document.createElement('div');
@@ -106,8 +108,8 @@ function displayPhotographerInfo(photographer) {
     contactButton.setAttribute('aria-label', 'Contact me');
 }
 
+/** Displays the photographer's media on the page. **/
 function displayPhotographerMedia(media, photographerFullName) {
-    // Clear existing media
     const existingMediaSection = document.querySelector('.photographer-media');
     if (existingMediaSection) {
         existingMediaSection.remove();
@@ -197,8 +199,7 @@ function displayPhotographerMedia(media, photographerFullName) {
     main.appendChild(mediaSection);
 }
 
-
-// Sorting Dropdown
+/** Creates a sorting dropdown for the media items. **/
 function createSortingDropdown(media, photographerName) {
     const dropdownButton = document.createElement('button');
     dropdownButton.classList.add('dropdown-btn');
@@ -230,9 +231,16 @@ function createSortingDropdown(media, photographerName) {
         listItem.setAttribute('data-value', option.value);
         listItem.setAttribute('tabindex', '0');
         listItem.setAttribute('aria-label', `Sort by ${option.text}`);
-        listItem.innerHTML = `
-            <a href="javascript:void(0)" onclick="filterBy('${option.value}')">${option.text}</a>
-        `;
+
+        const anchor = document.createElement('a');
+        anchor.setAttribute('href', 'javascript:void(0)');
+        anchor.textContent = option.text;
+        anchor.addEventListener('click', () => {
+            const sortedMedia = filterBy(option.value, media);
+            displayPhotographerMedia(sortedMedia, photographerName);
+        });
+
+        listItem.appendChild(anchor);
         listbox.appendChild(listItem);
     });
 
@@ -249,22 +257,7 @@ function createSortingDropdown(media, photographerName) {
     listbox.addEventListener('click', (event) => {
         if (event.target.matches('[role="option"] a')) {
             const selectedOption = event.target.parentElement.getAttribute('data-value');
-            let sortedMedia;
-
-            switch (selectedOption) {
-                case 'popularity':
-                    sortedMedia = sortByPopularity(media);
-                    break;
-                case 'date':
-                    sortedMedia = sortByDate(media);
-                    break;
-                case 'title':
-                    sortedMedia = sortByTitle(media);
-                    break;
-                default:
-                    sortedMedia = media;
-            }
-
+            const sortedMedia = filterBy(selectedOption, media);
             displayPhotographerMedia(sortedMedia, photographerName);
             dropdownButton.querySelector('.activeFilter').textContent = event.target.textContent;
             dropdownButton.setAttribute('aria-expanded', 'false');
@@ -302,8 +295,7 @@ function createSortingDropdown(media, photographerName) {
     document.querySelector('.sorting-container').appendChild(listbox);
 }
 
-
-// Initialize Photographer Page
+/** Initializes the photographer page by loading data and displaying the photographer's information and media. **/
 async function initPhotographerPage() {
     if (!photographerId) {
         console.error("Aucun ID de photographe dans l'URL");
@@ -323,5 +315,5 @@ async function initPhotographerPage() {
     }
 }
 
-// Event Listeners
+// Event listener to initialize the photographer page when the DOM content is loaded.
 window.addEventListener('DOMContentLoaded', initPhotographerPage);
