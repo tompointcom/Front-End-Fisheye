@@ -4,7 +4,7 @@ export default class MediaFactory {
         let mediaElement;
 
         switch (true) {
-            case !!mediaItem.image:
+            case !!mediaItem["image"]:
                 mediaElement = document.createElement('img');
                 mediaElement.setAttribute('src', `assets/photographers/${photographerFirstName}/${mediaItem.image}`);
                 mediaElement.setAttribute('alt', mediaItem.title);
