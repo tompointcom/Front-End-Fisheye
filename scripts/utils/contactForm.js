@@ -4,8 +4,7 @@ const form = document.getElementById("form");
 
 // Utility Functions
 function displayModal(photographerName) {
-    const photographerNameElement = document.getElementById("photographer_name");
-    photographerNameElement.textContent = photographerName;
+    document.getElementById("photographer_name").textContent = photographerName;
     modal.style.display = "block";
     modal.setAttribute('aria-hidden', 'false');
     modal.setAttribute('aria-labelledby', 'modal-title');
@@ -19,9 +18,7 @@ function closeModal() {
 }
 
 function handleEscapeKey(event) {
-    if (event.key === "Escape") {
-        closeModal();
-    }
+    if (event.key === "Escape") closeModal();
 }
 
 function setError(element, message) {
@@ -45,11 +42,7 @@ function clearError(element) {
 // Validation Functions
 function verifyInput(input) {
     clearError(input);
-    if (input.value === "") {
-        setError(input, `Le champ ${input.id} est vide.`);
-        return false;
-    }
-    if (input.value.length < 2) {
+    if (input.value === "" || input.value.length < 2) {
         setError(input, `Veuillez entrer 2 caractères ou plus pour le champ ${input.id}.`);
         return false;
     }
@@ -59,12 +52,8 @@ function verifyInput(input) {
 function verifyEmail(email) {
     clearError(email);
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email.value)) {
+    if (!emailPattern.test(email.value) || email.value === "") {
         setError(email, "L'email n'est pas valide.");
-        return false;
-    }
-    if (email.value === "") {
-        setError(email, "Veuillez saisir un email.");
         return false;
     }
     return true;
@@ -72,11 +61,7 @@ function verifyEmail(email) {
 
 function verifyMessage(message) {
     clearError(message);
-    if (message.value === "") {
-        setError(message, "Veuillez saisir un message.");
-        return false;
-    }
-    if (message.value.length > 350) {
+    if (message.value === "" || message.value.length > 350) {
         setError(message, "Vous avez atteint la limite de caractères.");
         return false;
     }
@@ -86,20 +71,20 @@ function verifyMessage(message) {
 // Event Handlers
 function handleFormSubmit(event) {
     event.preventDefault(); // Prevent default form submission
-    let formIsValid = true;
-
     const firstName = document.getElementById("first");
     const lastName = document.getElementById("last");
     const email = document.getElementById("email");
     const message = document.getElementById("message");
 
-    if (!verifyInput(firstName)) formIsValid = false;
-    if (!verifyInput(lastName)) formIsValid = false;
-    if (!verifyEmail(email)) formIsValid = false;
-    if (!verifyMessage(message)) formIsValid = false;
+    const formIsValid = verifyInput(firstName) && verifyInput(lastName) && verifyEmail(email) && verifyMessage(message);
 
     if (formIsValid) {
         closeModal();
+        // Log form data to console
+        console.log(`Prenom: ${firstName.value}`);
+        console.log(`Nom: ${lastName.value}`);
+        console.log(`E-mail: ${email.value}`);
+        console.log(`Message: ${message.value}`);
     }
 }
 

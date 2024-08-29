@@ -88,6 +88,7 @@ function displayPhotographerInfo(photographer) {
 
     const heartIcon = document.createElement('i');
     heartIcon.classList.add('fas', 'fa-heart');
+    heartIcon.setAttribute('aria-hidden', 'true');
 
     const totalLikesContainer = document.createElement('div');
     totalLikesContainer.classList.add('totalLikesContainer');
@@ -150,6 +151,7 @@ function displayPhotographerMedia(media, photographerFullName) {
         const heartIcon = document.createElement('i');
         heartIcon.classList.add('fas', 'fa-heart');
         heartIcon.dataset.liked = false;
+        heartIcon.setAttribute('aria-hidden', 'true');
         heartIcon.setAttribute('aria-label', 'Like button');
         heartIcon.setAttribute('tabindex', '0');
 
