@@ -124,7 +124,7 @@ function displayPhotographerMedia(media, photographerFullName) {
     updateTotalLikesDisplay(media);
 
     media.forEach((item, index) => {
-        const mediaContainer = document.createElement('div');
+        const mediaContainer = document.createElement('article');
         mediaContainer.classList.add('media-item');
         mediaContainer.setAttribute('tabindex', '0');
         mediaContainer.setAttribute('aria-label', `Media item: ${item.title}`);
