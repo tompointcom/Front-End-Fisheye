@@ -34,7 +34,7 @@ header {
 .bground {
     border-radius: 5px;
     background-color: #DB8876;
-    width: 35%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -42,6 +42,15 @@ header {
     padding: 35px;
     margin: auto;
     height: 100%;
+}
+
+.modal {
+    width: 100%;
+}
+
+.modal-body {
+    width: 100%;
+    padding-top: 40px;
 }
 
 .modal header {
@@ -53,6 +62,14 @@ header {
     cursor: pointer;
 }
 
+.modal-header-text {
+    margin-top: 50px;
+}
+
+.modal-header-text p {
+    font-size: 64px;
+}
+
 .close_modal {
     height: 15%;
     width: 30%;
@@ -61,7 +78,7 @@ header {
 
 .close_modal img {
     position: absolute;
-    top: 5px;
+    top: 20px;
     right: 0;
 }
 
@@ -152,12 +169,12 @@ form textarea {
     align-items: center;
     background-color: #FAFAFA;
     height: 300px;
-    margin: 0 100px;
+    margin: 0 150px;
 }
 
 .photograph-header-text h1 {
     color: #D3573C;
-    font-size: 2.25rem;
+    font-size: 70px;
     margin: 0;
 }
 
@@ -216,6 +233,7 @@ form textarea {
     align-items: center;
     color: #901C1C;
     font-size: 20px;
+    margin-top: -25px;
 }
 
 .likes-container {
@@ -262,7 +280,7 @@ form textarea {
     gap: 1rem;
     align-items: center;
     margin: 1rem 0;
-    padding-left: 4rem;
+    padding-left: 11rem;
 }
 
 .sort-by {
